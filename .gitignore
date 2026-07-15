@@ -1,0 +1,12 @@
+.DS_Store
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+*.moved-aside
+*.swp
+.env
+supabase/.temp/
+*.pem
+*.p8
+*.mobileprovision

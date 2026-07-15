@@ -1,0 +1,18 @@
+name: Mashhad CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  ios:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build iOS app
+        run: xcodebuild -project Mashhad.xcodeproj -scheme Mashhad -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 15' -configuration Debug build CODE_SIGNING_ALLOWED=NO
+      - name: Run unit tests
+        run: xcodebuild test -project Mashhad.xcodeproj -scheme Mashhad -destination 'platform=iOS Simulator,name=iPhone 15' CODE_SIGNING_ALLOWED=NO
+      - name: Check committed secrets
+        run: git grep -nE '(sk-|eyJ|BEGIN PRIVATE KEY|TMDB_API_KEY\s*=\s*[^$[:space:]]+)' -- ':!*.md' ':!.env.example' && exit 1 || true
