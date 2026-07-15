@@ -25,7 +25,7 @@ struct MashhadApp: App {
 
     private static func makeModelContainer() -> ModelContainer {
         do {
-            return try ModelContainer(for: WatchlistEntry.self, EpisodeProgress.self, PendingSyncOperation.self)
+            return try ModelContainer(for: WatchlistEntry.self, EpisodeProgress.self, PendingSyncOperation.self, CustomList.self)
         } catch {
             fatalError("Unable to create the local data store: \(error.localizedDescription)")
         }

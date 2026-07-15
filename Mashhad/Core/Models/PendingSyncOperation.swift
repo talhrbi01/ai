@@ -8,6 +8,12 @@ enum SyncOperationKind: String, Codable, Sendable {
     case removeEpisodeWatched
 }
 
+struct EpisodeSyncPayload: Codable, Sendable {
+    let mediaID: Int
+    let seasonNumber: Int
+    let episodeNumber: Int
+}
+
 @Model
 final class PendingSyncOperation {
     @Attribute(.unique) var id: UUID

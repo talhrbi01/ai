@@ -29,6 +29,12 @@ struct ProfileView: View {
                     }
                     .buttonStyle(.bordered)
                     .tint(MashhadTheme.accentSecondary)
+                    NavigationLink(destination: ListsView()) {
+                        Label("profile_open_lists", systemImage: "square.stack.3d.up")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(MashhadTheme.accentSecondary)
                     Button {
                         Task { await requestNotifications() }
                     } label: {

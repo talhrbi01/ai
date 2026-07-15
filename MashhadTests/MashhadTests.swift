@@ -46,4 +46,17 @@ final class MashhadTests: XCTestCase {
             explicitlyRevealed: true
         ))
     }
+
+    func testPreviewServiceReturnsEpisodeData() async throws {
+        let media = PreviewTMDBService.samples[0]
+        let episodes = try await PreviewTMDBService().episodes(for: media, seasonNumber: 1)
+        XCTAssertEqual(episodes.first?.id, 101)
+        XCTAssertEqual(episodes.first?.seasonNumber, 1)
+    }
+
+    func testEpisodeProgressHasStableIdentifier() {
+        let progress = EpisodeProgress(mediaID: 42, seasonNumber: 2, episodeNumber: 7, watchedAt: .now)
+        XCTAssertEqual(progress.id, "42-s2-e7")
+        XCTAssertTrue(progress.isWatched)
+    }
 }

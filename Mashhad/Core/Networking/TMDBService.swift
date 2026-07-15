@@ -4,6 +4,7 @@ protocol TMDBServiceProtocol: Sendable {
     func trending() async throws -> [MediaSummary]
     func search(query: String) async throws -> [MediaSummary]
     func details(for media: MediaSummary) async throws -> MediaDetails
+    func episodes(for media: MediaSummary, seasonNumber: Int) async throws -> [EpisodeSummary]
 }
 
 enum TMDBError: LocalizedError, Sendable {
@@ -60,6 +61,12 @@ final class TMDBService: TMDBServiceProtocol, @unchecked Sendable {
         return dto.details(fallback: media)
     }
 
+    func episodes(for media: MediaSummary, seasonNumber: Int) async throws -> [EpisodeSummary] {
+        guard media.kind == .series else { throw TMDBError.unsupportedMedia }
+        let response: TMBDEpisodesResponse = try await request(path: "tv/\(media.id)/season/\(seasonNumber)")
+        return response.episodes.map { $0.summary }
+    }
+
     private func request<T: Decodable>(path: String, queryItems: [URLQueryItem] = []) async throws -> T {
         guard let apiKey, !apiKey.isEmpty else { throw TMDBError.missingAPIKey }
         return try await client.get(
@@ -83,6 +90,21 @@ struct PreviewTMDBService: TMDBServiceProtocol {
         MediaDetails(summary: media, cast: [], seasons: [])
     }
 
+    func episodes(for media: MediaSummary, seasonNumber: Int) async throws -> [EpisodeSummary] {
+        guard media.kind == .series else { throw TMDBError.unsupportedMedia }
+        return [
+            EpisodeSummary(
+                id: 101,
+                seasonNumber: seasonNumber,
+                episodeNumber: 1,
+                name: "حلقة تجريبية",
+                overview: "بيانات مخصصة للمعاينة والاختبارات فقط.",
+                stillPath: nil,
+                airDate: Date()
+            )
+        ]
+    }
+
     static let samples = [
         MediaSummary(
             id: 1, kind: .series, title: "عينة للمعاينة", originalTitle: "Preview Sample",
@@ -94,6 +116,10 @@ struct PreviewTMDBService: TMDBServiceProtocol {
 
 private struct TMDBListResponse: Decodable {
     let results: [TMDBMediaDTO]
+}
+
+private struct TMBDEpisodesResponse: Decodable {
+    let episodes: [TMDBEpisodeDTO]
 }
 
 private struct TMDBMediaDTO: Decodable {
@@ -212,6 +238,36 @@ private struct TMDBSeasonDTO: Decodable {
         case id, name
         case seasonNumber = "season_number"
         case episodeCount = "episode_count"
+    }
+}
+
+private struct TMDBEpisodeDTO: Decodable {
+    let id: Int
+    let name: String
+    let overview: String?
+    let stillPath: String?
+    let airDate: String?
+    let episodeNumber: Int
+    let seasonNumber: Int
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, overview
+        case stillPath = "still_path"
+        case airDate = "air_date"
+        case episodeNumber = "episode_number"
+        case seasonNumber = "season_number"
+    }
+
+    var summary: EpisodeSummary {
+        EpisodeSummary(
+            id: id,
+            seasonNumber: seasonNumber,
+            episodeNumber: episodeNumber,
+            name: name,
+            overview: overview ?? "",
+            stillPath: stillPath,
+            airDate: TMDBDate.parse(airDate)
+        )
     }
 }
 

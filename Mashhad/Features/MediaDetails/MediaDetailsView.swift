@@ -5,6 +5,8 @@ struct MediaDetailsView: View {
     @Environment(AppEnvironment.self) private var environment
     @Environment(\.modelContext) private var modelContext
     @Query private var watchlistEntries: [WatchlistEntry]
+    @State private var selectedSeason: SeasonSummary?
+    @State private var showListPicker = false
     @State private var state: LoadState<MediaDetails> = .idle
 
     let media: MediaSummary
@@ -22,6 +24,16 @@ struct MediaDetailsView: View {
         .navigationTitle(media.title)
         .navigationBarTitleDisplayMode(.inline)
         .task(id: media.id) { await load() }
+        .sheet(item: $selectedSeason) { season in
+            NavigationStack {
+                EpisodeListView(media: media, season: season)
+            }
+        }
+        .sheet(isPresented: $showListPicker) {
+            NavigationStack {
+                ListPickerView(media: media)
+            }
+        }
     }
 
     private var hero: some View {
@@ -55,6 +67,13 @@ struct MediaDetailsView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(MashhadTheme.accent)
+            Button {
+                showListPicker = true
+            } label: {
+                Label("media_add_to_list", systemImage: "square.stack.3d.up")
+            }
+            .buttonStyle(.bordered)
+            .tint(MashhadTheme.accentSecondary)
             ShareLink(item: media.title) {
                 Label("media_share", systemImage: "square.and.arrow.up")
             }
@@ -119,21 +138,24 @@ struct MediaDetailsView: View {
     }
 
     private func seasonRow(_ season: SeasonSummary) -> some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(season.name)
-                    .font(.headline)
-                    .foregroundStyle(MashhadTheme.textPrimary)
-                Text("\(season.episodeCount) \(String(localized: "media_episodes"))")
-                    .font(.caption)
+        Button { selectedSeason = season } label: {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(season.name)
+                        .font(.headline)
+                        .foregroundStyle(MashhadTheme.textPrimary)
+                    Text("\(season.episodeCount) \(String(localized: "media_episodes"))")
+                        .font(.caption)
+                        .foregroundStyle(MashhadTheme.textSecondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.forward")
                     .foregroundStyle(MashhadTheme.textSecondary)
             }
-            Spacer()
-            Image(systemName: "chevron.forward")
-                .foregroundStyle(MashhadTheme.textSecondary)
+            .padding()
+            .background(MashhadTheme.surface, in: RoundedRectangle(cornerRadius: 14))
         }
-        .padding()
-        .background(MashhadTheme.surface, in: RoundedRectangle(cornerRadius: 14))
+        .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
     }
 
@@ -168,6 +190,108 @@ struct MediaDetailsView: View {
     private func load() async {
         state = .loading
         do { state = .loaded(try await environment.tmdbService.details(for: media)) }
+        catch is CancellationError { state = .idle }
+        catch { state = .failed(error.localizedDescription) }
+    }
+}
+
+struct EpisodeListView: View {
+    @Environment(AppEnvironment.self) private var environment
+    @Environment(\.modelContext) private var modelContext
+    @Query private var progressEntries: [EpisodeProgress]
+    @State private var state: LoadState<[EpisodeSummary]> = .idle
+
+    let media: MediaSummary
+    let season: SeasonSummary
+
+    var body: some View {
+        MashhadBackground {
+            Group {
+                switch state {
+                case .idle, .loading:
+                    ProgressView().frame(maxWidth: .infinity)
+                case .failed(let message):
+                    ErrorStateView(message: message) { Task { await load() } }
+                case .loaded(let episodes):
+                    if episodes.isEmpty {
+                        EmptyStateView(title: "episodes_empty_title", message: "episodes_empty_message", symbol: "rectangle.stack")
+                    } else {
+                        List(episodes) { episode in
+                            episodeRow(episode)
+                                .listRowBackground(MashhadTheme.surface)
+                        }
+                        .scrollContentBackground(.hidden)
+                    }
+                }
+            }
+        }
+        .navigationTitle(season.name)
+        .navigationBarTitleDisplayMode(.inline)
+        .task(id: "\(media.id)-\(season.seasonNumber)") { await load() }
+    }
+
+    private func episodeRow(_ episode: EpisodeSummary) -> some View {
+        Button { toggle(episode) } label: {
+            HStack(alignment: .top, spacing: 12) {
+                Image(systemName: isWatched(episode) ? "checkmark.circle.fill" : "circle")
+                    .foregroundStyle(isWatched(episode) ? MashhadTheme.accent : MashhadTheme.textSecondary)
+                    .font(.title3)
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("\(episode.episodeNumber). \(episode.name)")
+                        .font(.headline)
+                        .foregroundStyle(MashhadTheme.textPrimary)
+                    if let airDateText = episode.airDateText {
+                        Text(airDateText)
+                            .font(.caption)
+                            .foregroundStyle(MashhadTheme.textSecondary)
+                    }
+                    if !episode.overview.isEmpty {
+                        SpoilerBlurView(isHidden: !isWatched(episode)) {
+                            Text(episode.overview)
+                                .font(.subheadline)
+                                .foregroundStyle(MashhadTheme.textSecondary)
+                                .multilineTextAlignment(.leading)
+                        }
+                    }
+                }
+                Spacer(minLength: 0)
+            }
+            .padding(.vertical, 6)
+        }
+        .buttonStyle(.plain)
+        .accessibilityValue(Text(LocalizedStringKey(isWatched(episode) ? "episode_watched" : "episode_unwatched")))
+    }
+
+    private func isWatched(_ episode: EpisodeSummary) -> Bool {
+        progressEntries.contains { $0.id == progressID(for: episode) && $0.isWatched }
+    }
+
+    private func progressID(for episode: EpisodeSummary) -> String {
+        "\(media.id)-s\(episode.seasonNumber)-e\(episode.episodeNumber)"
+    }
+
+    private func toggle(_ episode: EpisodeSummary) {
+        if let existing = progressEntries.first(where: { $0.id == progressID(for: episode) }) {
+            modelContext.delete(existing)
+            environment.syncQueue.enqueue(
+                kind: .removeEpisodeWatched,
+                payload: EpisodeSyncPayload(mediaID: media.id, seasonNumber: episode.seasonNumber, episodeNumber: episode.episodeNumber),
+                in: modelContext
+            )
+        } else {
+            modelContext.insert(EpisodeProgress(mediaID: media.id, seasonNumber: episode.seasonNumber, episodeNumber: episode.episodeNumber, watchedAt: .now))
+            environment.syncQueue.enqueue(
+                kind: .markEpisodeWatched,
+                payload: EpisodeSyncPayload(mediaID: media.id, seasonNumber: episode.seasonNumber, episodeNumber: episode.episodeNumber),
+                in: modelContext
+            )
+        }
+    }
+
+    @MainActor
+    private func load() async {
+        state = .loading
+        do { state = .loaded(try await environment.tmdbService.episodes(for: media, seasonNumber: season.seasonNumber)) }
         catch is CancellationError { state = .idle }
         catch { state = .failed(error.localizedDescription) }
     }

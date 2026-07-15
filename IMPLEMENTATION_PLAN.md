@@ -15,7 +15,7 @@
 | Auth وSign in with Apple | In Progress | P0 | Supabase + Apple capability | كود البريد/Apple/Keychain/حذف الحساب موجود؛ التحقق عن بعد لاحق |
 | البحث والتفاصيل من TMDB | Completed | P0 | TMDB service | مسارا البحث والتفاصيل مربوطان بالخدمة |
 | التقويم والتنبيهات | In Progress | P1 | بيانات حلقات + APNs | جدولة محلية وطلب إذن متأخر موجودان؛ APNs لاحق |
-| المجتمع والقوائم والإحصائيات | Not Started | P1 | Supabase schema | CRUD وRLS واختبارات أساسية |
+| المجتمع والقوائم والإحصائيات | In Progress | P1 | Supabase schema | CRUD محلي للقوائم المخصصة وإضافة الأعمال منها؛ التعاون والمزامنة الاجتماعية لاحقان |
 | Widgets وOffline Sync | In Progress | P1 | App Groups + BackgroundTasks | Queue SwiftData ومحاولات إعادة الإرسال موجودة؛ sender/background لاحقان |
 | لوحة الإدارة وCI/CD | Not Started | P1 | GitHub/Supabase | build/lint/tests وفحص أسرار |
 
@@ -44,4 +44,8 @@
 - XcodeBuildMCP `list_schemes`: محجوب بيئيًا برسالة `spawn xcodebuild ENOENT`؛ يلزم macOS/Xcode لإكمال Build والاختبارات.
 - XcodeBuildMCP `list_sims`: محجوب بيئيًا برسالة `spawn xcrun ENOENT`.
 - XcodeBuildMCP `build_sim`: رفض البدء لعدم وجود `simulatorId` أو `simulatorName` بعد فشل اكتشاف المحاكيات.
-- فحص مفاتيح String Catalog المستخدمة من Swift: نجح (`CATALOG_KEYS=102`).
+- فحص مفاتيح String Catalog المستخدمة من Swift: نجح (`LOCALIZATION_USED=75`, `CATALOG_KEYS=125`).
+- فحص SwiftData/project wiring بعد إضافة القوائم والحلقات: نجح (`SWIFT_FILES=35`, `PROJECT_REFS=PASS`).
+- فحص XML والموارد والأسرار بعد الإضافة: نجح (`RESOURCES_XML=PASS`, `SECRETS=PASS`).
+- XcodeBuildMCP `session_show_defaults`: المشروع `Mashhad.xcodeproj` وScheme `Mashhad` مضبوطتان؛ لا يوجد Simulator.
+- XcodeBuildMCP `build_run_sim`: تعذر قبل البناء برسالة `MISSING_REQUIRED_PARAMETERS` لأن `simulatorId` أو `simulatorName` غير متاحين، بعد فشل `list_sims` برسالة `spawn xcrun ENOENT`.

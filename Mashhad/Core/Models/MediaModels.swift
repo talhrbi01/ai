@@ -49,6 +49,20 @@ struct MediaDetails: Hashable, Sendable {
     let seasons: [SeasonSummary]
 }
 
+struct EpisodeSummary: Identifiable, Hashable, Sendable {
+    let id: Int
+    let seasonNumber: Int
+    let episodeNumber: Int
+    let name: String
+    let overview: String
+    let stillPath: String?
+    let airDate: Date?
+
+    var airDateText: String? {
+        airDate.map { $0.formatted(date: .abbreviated, time: .omitted) }
+    }
+}
+
 struct CastMember: Hashable, Sendable {
     let id: Int
     let name: String

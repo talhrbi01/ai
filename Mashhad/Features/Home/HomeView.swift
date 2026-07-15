@@ -1,7 +1,9 @@
+import SwiftData
 import SwiftUI
 
 struct HomeView: View {
     @Environment(AppEnvironment.self) private var environment
+    @Query(sort: \WatchlistEntry.createdAt, order: .reverse) private var watchlist: [WatchlistEntry]
     @State private var state: LoadState<[MediaSummary]> = .idle
 
     var body: some View {
@@ -12,11 +14,7 @@ struct HomeView: View {
                     SectionHeader(title: "home_trending")
                     content
                     SectionHeader(title: "home_watch_next")
-                    EmptyStateView(
-                        title: "home_empty_watchlist_title",
-                        message: "home_empty_watchlist_message",
-                        symbol: "bookmark"
-                    )
+                    watchNextContent
                 }
                 .padding(.horizontal, MashhadTheme.pagePadding)
                 .padding(.vertical, 20)
@@ -26,6 +24,45 @@ struct HomeView: View {
         .navigationTitle("tab_home")
         .navigationBarTitleDisplayMode(.inline)
         .task(id: environment.configuration.tmdbAPIKey) { await load() }
+    }
+
+    @ViewBuilder
+    private var watchNextContent: some View {
+        if watchlist.isEmpty {
+            EmptyStateView(
+                title: "home_empty_watchlist_title",
+                message: "home_empty_watchlist_message",
+                symbol: "bookmark"
+            )
+        } else {
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(alignment: .top, spacing: 14) {
+                    ForEach(watchlist) { entry in
+                        let item = media(from: entry)
+                        NavigationLink(value: AppRouter.Route.mediaDetails(item)) {
+                            MediaPosterCard(media: item, configuration: environment.configuration)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+        }
+    }
+
+    private func media(from entry: WatchlistEntry) -> MediaSummary {
+        MediaSummary(
+            id: entry.mediaID,
+            kind: MediaKind(rawValue: entry.kindRaw) ?? .movie,
+            title: entry.title,
+            originalTitle: nil,
+            overview: "",
+            posterPath: entry.posterPath,
+            backdropPath: nil,
+            releaseDate: nil,
+            voteAverage: 0,
+            genreNames: [],
+            numberOfSeasons: nil
+        )
     }
 
     private var header: some View {
