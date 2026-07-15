@@ -120,3 +120,28 @@ struct ErrorStateView: View {
         )
     }
 }
+
+struct SpoilerBlurView<Content: View>: View {
+    let isHidden: Bool
+    let content: Content
+    @State private var isRevealed = false
+
+    init(isHidden: Bool, @ViewBuilder content: () -> Content) {
+        self.isHidden = isHidden
+        self.content = content()
+    }
+
+    var body: some View {
+        ZStack {
+            content
+                .blur(radius: isHidden && !isRevealed ? 13 : 0)
+            if isHidden && !isRevealed {
+                Button("spoiler_reveal") { isRevealed = true }
+                    .buttonStyle(.borderedProminent)
+                    .tint(MashhadTheme.accent)
+                    .accessibilityHint(Text("spoiler_reveal_hint"))
+            }
+        }
+        .animation(.easeInOut(duration: 0.2), value: isRevealed)
+    }
+}

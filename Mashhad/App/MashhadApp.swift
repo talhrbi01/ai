@@ -10,7 +10,8 @@ struct MashhadApp: App {
         let configuration = AppConfiguration.fromBundle()
         let tmdbService = TMDBService(apiKey: configuration.tmdbAPIKey)
         let supabaseService = SupabaseService(baseURL: configuration.supabaseURL, anonKey: configuration.supabaseAnonKey)
-        _environment = State(initialValue: AppEnvironment(configuration: configuration, tmdbService: tmdbService, supabaseService: supabaseService))
+        let authenticationService = SupabaseAuthenticationService(baseURL: configuration.supabaseURL, anonKey: configuration.supabaseAnonKey)
+        _environment = State(initialValue: AppEnvironment(configuration: configuration, tmdbService: tmdbService, supabaseService: supabaseService, authenticationService: authenticationService))
         modelContainer = Self.makeModelContainer()
     }
 
@@ -24,7 +25,7 @@ struct MashhadApp: App {
 
     private static func makeModelContainer() -> ModelContainer {
         do {
-            return try ModelContainer(for: WatchlistEntry.self, EpisodeProgress.self)
+            return try ModelContainer(for: WatchlistEntry.self, EpisodeProgress.self, PendingSyncOperation.self)
         } catch {
             fatalError("Unable to create the local data store: \(error.localizedDescription)")
         }

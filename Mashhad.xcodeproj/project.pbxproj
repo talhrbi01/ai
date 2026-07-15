@@ -13,6 +13,12 @@
 		000000000000000000000104 /* AppTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000204 /* AppTab.swift */; };
 		000000000000000000000105 /* MashhadApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000205 /* MashhadApp.swift */; };
 		000000000000000000000106 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000206 /* SessionStore.swift */; };
+		000000000000000000000131 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000235 /* AuthenticationService.swift */; };
+		000000000000000000000133 /* PendingSyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000238 /* PendingSyncOperation.swift */; };
+		000000000000000000000134 /* WatchProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000237 /* WatchProgress.swift */; };
+		000000000000000000000135 /* SpoilerProtection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000239 /* SpoilerProtection.swift */; };
+		000000000000000000000136 /* OfflineSyncQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000240 /* OfflineSyncQueue.swift */; };
+		000000000000000000000137 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000241 /* NotificationScheduler.swift */; };
 		000000000000000000000107 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000207 /* Components.swift */; };
 		000000000000000000000108 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000208 /* Theme.swift */; };
 		000000000000000000000109 /* EpisodeProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000209 /* EpisodeProgress.swift */; };
@@ -33,6 +39,7 @@
 		000000000000000000000123 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000223 /* SearchView.swift */; };
 		000000000000000000000124 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000224 /* StatisticsView.swift */; };
 		000000000000000000000125 /* WatchlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000225 /* WatchlistView.swift */; };
+		000000000000000000000132 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000236 /* AuthenticationView.swift */; };
 		000000000000000000000126 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000226 /* Localizable.xcstrings */; };
 		000000000000000000000127 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000227 /* PrivacyInfo.xcprivacy */; };
 		000000000000000000000128 /* MashhadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000228 /* MashhadTests.swift */; };
@@ -50,6 +57,12 @@
 		000000000000000000000204 /* AppTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTab.swift; sourceTree = "<group>"; };
 		000000000000000000000205 /* MashhadApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MashhadApp.swift; sourceTree = "<group>"; };
 		000000000000000000000206 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
+		000000000000000000000235 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
+		000000000000000000000237 /* WatchProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchProgress.swift; sourceTree = "<group>"; };
+		000000000000000000000238 /* PendingSyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingSyncOperation.swift; sourceTree = "<group>"; };
+		000000000000000000000239 /* SpoilerProtection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpoilerProtection.swift; sourceTree = "<group>"; };
+		000000000000000000000240 /* OfflineSyncQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineSyncQueue.swift; sourceTree = "<group>"; };
+		000000000000000000000241 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
 		000000000000000000000207 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		000000000000000000000208 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		000000000000000000000209 /* EpisodeProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeProgress.swift; sourceTree = "<group>"; };
@@ -70,6 +83,8 @@
 		000000000000000000000223 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		000000000000000000000224 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		000000000000000000000225 /* WatchlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistView.swift; sourceTree = "<group>"; };
+		000000000000000000000236 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		000000000000000000000242 /* Mashhad.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mashhad.entitlements; sourceTree = "<group>"; };
 		000000000000000000000226 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		000000000000000000000227 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		000000000000000000000228 /* MashhadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MashhadTests.swift; sourceTree = "<group>"; };
@@ -88,13 +103,14 @@
 
 /* Begin PBXGroup section */
 		000000000000000000000301 /* App */ = {isa = PBXGroup; children = (000000000000000000000201, 000000000000000000000202, 000000000000000000000203, 000000000000000000000204, 000000000000000000000205); path = App; sourceTree = "<group>"; };
-		000000000000000000000302 /* Authentication */ = {isa = PBXGroup; children = (000000000000000000000206); path = Authentication; sourceTree = "<group>"; };
+		000000000000000000000302 /* Authentication */ = {isa = PBXGroup; children = (000000000000000000000206, 000000000000000000000235); path = Authentication; sourceTree = "<group>"; };
 		000000000000000000000303 /* DesignSystem */ = {isa = PBXGroup; children = (000000000000000000000207, 000000000000000000000208); path = DesignSystem; sourceTree = "<group>"; };
-		000000000000000000000304 /* Models */ = {isa = PBXGroup; children = (000000000000000000000209, 000000000000000000000210, 000000000000000000000211); path = Models; sourceTree = "<group>"; };
+		000000000000000000000304 /* Models */ = {isa = PBXGroup; children = (000000000000000000000209, 000000000000000000000210, 000000000000000000000211, 000000000000000000000237, 000000000000000000000238); path = Models; sourceTree = "<group>"; };
 		000000000000000000000305 /* Networking */ = {isa = PBXGroup; children = (000000000000000000000212, 000000000000000000000213, 000000000000000000000234); path = Networking; sourceTree = "<group>"; };
-		000000000000000000000306 /* Storage */ = {isa = PBXGroup; children = (000000000000000000000214); path = Storage; sourceTree = "<group>"; };
-		000000000000000000000307 /* Utilities */ = {isa = PBXGroup; children = (000000000000000000000215); path = Utilities; sourceTree = "<group>"; };
-		000000000000000000000308 /* Core */ = {isa = PBXGroup; children = (000000000000000000000302, 000000000000000000000303, 000000000000000000000304, 000000000000000000000305, 000000000000000000000306, 000000000000000000000307); path = Core; sourceTree = "<group>"; };
+		000000000000000000000306 /* Storage */ = {isa = PBXGroup; children = (000000000000000000000214, 000000000000000000000240); path = Storage; sourceTree = "<group>"; };
+		000000000000000000000307 /* Utilities */ = {isa = PBXGroup; children = (000000000000000000000215, 000000000000000000000239); path = Utilities; sourceTree = "<group>"; };
+		000000000000000000000327 /* Notifications */ = {isa = PBXGroup; children = (000000000000000000000241); path = Notifications; sourceTree = "<group>"; };
+		000000000000000000000308 /* Core */ = {isa = PBXGroup; children = (000000000000000000000302, 000000000000000000000303, 000000000000000000000304, 000000000000000000000305, 000000000000000000000306, 000000000000000000000307, 000000000000000000000327); path = Core; sourceTree = "<group>"; };
 		000000000000000000000316 /* ActivityFeed */ = {isa = PBXGroup; children = (000000000000000000000216); path = ActivityFeed; sourceTree = "<group>"; };
 		000000000000000000000317 /* Calendar */ = {isa = PBXGroup; children = (000000000000000000000217); path = Calendar; sourceTree = "<group>"; };
 		000000000000000000000318 /* Discover */ = {isa = PBXGroup; children = (000000000000000000000218); path = Discover; sourceTree = "<group>"; };
@@ -105,8 +121,9 @@
 		000000000000000000000323 /* Search */ = {isa = PBXGroup; children = (000000000000000000000223); path = Search; sourceTree = "<group>"; };
 		000000000000000000000324 /* Statistics */ = {isa = PBXGroup; children = (000000000000000000000224); path = Statistics; sourceTree = "<group>"; };
 		000000000000000000000325 /* Watchlist */ = {isa = PBXGroup; children = (000000000000000000000225); path = Watchlist; sourceTree = "<group>"; };
-		000000000000000000000309 /* Features */ = {isa = PBXGroup; children = (000000000000000000000316, 000000000000000000000317, 000000000000000000000318, 000000000000000000000319, 000000000000000000000320, 000000000000000000000321, 000000000000000000000322, 000000000000000000000323, 000000000000000000000324, 000000000000000000000325); path = Features; sourceTree = "<group>"; };
-		000000000000000000000310 /* Resources */ = {isa = PBXGroup; children = (000000000000000000000226, 000000000000000000000227, 000000000000000000000230); path = Resources; sourceTree = "<group>"; };
+		000000000000000000000326 /* Authentication */ = {isa = PBXGroup; children = (000000000000000000000236); path = Authentication; sourceTree = "<group>"; };
+		000000000000000000000309 /* Features */ = {isa = PBXGroup; children = (000000000000000000000316, 000000000000000000000317, 000000000000000000000318, 000000000000000000000319, 000000000000000000000320, 000000000000000000000321, 000000000000000000000322, 000000000000000000000323, 000000000000000000000324, 000000000000000000000325, 000000000000000000000326); path = Features; sourceTree = "<group>"; };
+		000000000000000000000310 /* Resources */ = {isa = PBXGroup; children = (000000000000000000000226, 000000000000000000000227, 000000000000000000000230, 000000000000000000000242); path = Resources; sourceTree = "<group>"; };
 		000000000000000000000311 /* Mashhad */ = {isa = PBXGroup; children = (000000000000000000000301, 000000000000000000000308, 000000000000000000000309, 000000000000000000000310); path = Mashhad; sourceTree = "<group>"; };
 		000000000000000000000312 /* MashhadTests */ = {isa = PBXGroup; children = (000000000000000000000228); path = MashhadTests; sourceTree = "<group>"; };
 		000000000000000000000313 /* MashhadUITests */ = {isa = PBXGroup; children = (000000000000000000000229); path = MashhadUITests; sourceTree = "<group>"; };
@@ -129,7 +146,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		000000000000000000000404 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000101, 000000000000000000000102, 000000000000000000000103, 000000000000000000000104, 000000000000000000000105, 000000000000000000000106, 000000000000000000000107, 000000000000000000000108, 000000000000000000000109, 000000000000000000000110, 000000000000000000000111, 000000000000000000000112, 000000000000000000000113, 000000000000000000000130, 000000000000000000000114, 000000000000000000000115, 000000000000000000000116, 000000000000000000000117, 000000000000000000000118, 000000000000000000000119, 000000000000000000000120, 000000000000000000000121, 000000000000000000000122, 000000000000000000000123, 000000000000000000000124, 000000000000000000000125); runOnlyForDeploymentPostprocessing = 0; };
+		000000000000000000000404 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000101, 000000000000000000000102, 000000000000000000000103, 000000000000000000000104, 000000000000000000000105, 000000000000000000000106, 000000000000000000000107, 000000000000000000000108, 000000000000000000000109, 000000000000000000000133, 000000000000000000000134, 000000000000000000000135, 000000000000000000000110, 000000000000000000000111, 000000000000000000000112, 000000000000000000000113, 000000000000000000000130, 000000000000000000000114, 000000000000000000000136, 000000000000000000000115, 000000000000000000000137, 000000000000000000000116, 000000000000000000000117, 000000000000000000000118, 000000000000000000000119, 000000000000000000000120, 000000000000000000000121, 000000000000000000000122, 000000000000000000000132, 000000000000000000000123, 000000000000000000000124, 000000000000000000000125); runOnlyForDeploymentPostprocessing = 0; };
 		000000000000000000000405 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000128); runOnlyForDeploymentPostprocessing = 0; };
 		000000000000000000000406 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000129); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
@@ -145,8 +162,8 @@
 		000000000000000000000904 /* Release */ = {isa = XCBuildConfiguration; buildSettings = { IPHONEOS_DEPLOYMENT_TARGET = 17.0; SWIFT_VERSION = 5.0; }; name = Release; };
 		000000000000000000000905 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { IPHONEOS_DEPLOYMENT_TARGET = 17.0; SWIFT_VERSION = 5.0; }; name = Debug; };
 		000000000000000000000906 /* Release */ = {isa = XCBuildConfiguration; buildSettings = { IPHONEOS_DEPLOYMENT_TARGET = 17.0; SWIFT_VERSION = 5.0; }; name = Release; };
-		000000000000000000000907 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = com.mashhad.app; PRODUCT_NAME = Mashhad; INFOPLIST_FILE = Mashhad/Resources/Info.plist; GENERATE_INFOPLIST_FILE = NO; IPHONEOS_DEPLOYMENT_TARGET = 17.0; TARGETED_DEVICE_FAMILY = 1; SWIFT_VERSION = 5.0; MARKETING_VERSION = 0.1.0; CURRENT_PROJECT_VERSION = 1; CODE_SIGN_STYLE = Automatic; TMDB_API_KEY = ""; SUPABASE_URL = ""; SUPABASE_ANON_KEY = ""; }; name = Debug; };
-		000000000000000000000908 /* Release */ = {isa = XCBuildConfiguration; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = com.mashhad.app; PRODUCT_NAME = Mashhad; INFOPLIST_FILE = Mashhad/Resources/Info.plist; GENERATE_INFOPLIST_FILE = NO; IPHONEOS_DEPLOYMENT_TARGET = 17.0; TARGETED_DEVICE_FAMILY = 1; SWIFT_VERSION = 5.0; MARKETING_VERSION = 0.1.0; CURRENT_PROJECT_VERSION = 1; CODE_SIGN_STYLE = Automatic; TMDB_API_KEY = ""; SUPABASE_URL = ""; SUPABASE_ANON_KEY = ""; }; name = Release; };
+		000000000000000000000907 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = com.mashhad.app; PRODUCT_NAME = Mashhad; INFOPLIST_FILE = Mashhad/Resources/Info.plist; CODE_SIGN_ENTITLEMENTS = Mashhad/Resources/Mashhad.entitlements; GENERATE_INFOPLIST_FILE = NO; IPHONEOS_DEPLOYMENT_TARGET = 17.0; TARGETED_DEVICE_FAMILY = 1; SWIFT_VERSION = 5.0; MARKETING_VERSION = 0.1.0; CURRENT_PROJECT_VERSION = 1; CODE_SIGN_STYLE = Automatic; TMDB_API_KEY = ""; SUPABASE_URL = ""; SUPABASE_ANON_KEY = ""; }; name = Debug; };
+		000000000000000000000908 /* Release */ = {isa = XCBuildConfiguration; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = com.mashhad.app; PRODUCT_NAME = Mashhad; INFOPLIST_FILE = Mashhad/Resources/Info.plist; CODE_SIGN_ENTITLEMENTS = Mashhad/Resources/Mashhad.entitlements; GENERATE_INFOPLIST_FILE = NO; IPHONEOS_DEPLOYMENT_TARGET = 17.0; TARGETED_DEVICE_FAMILY = 1; SWIFT_VERSION = 5.0; MARKETING_VERSION = 0.1.0; CURRENT_PROJECT_VERSION = 1; CODE_SIGN_STYLE = Automatic; TMDB_API_KEY = ""; SUPABASE_URL = ""; SUPABASE_ANON_KEY = ""; }; name = Release; };
 		000000000000000000000909 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = com.mashhad.app.tests; PRODUCT_NAME = MashhadTests; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mashhad.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Mashhad"; BUNDLE_LOADER = "$(TEST_HOST)"; INFOPLIST_KEY_CFBundleDisplayName = MashhadTests; IPHONEOS_DEPLOYMENT_TARGET = 17.0; SWIFT_VERSION = 5.0; }; name = Debug; };
 		000000000000000000000910 /* Release */ = {isa = XCBuildConfiguration; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = com.mashhad.app.tests; PRODUCT_NAME = MashhadTests; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mashhad.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Mashhad"; BUNDLE_LOADER = "$(TEST_HOST)"; INFOPLIST_KEY_CFBundleDisplayName = MashhadTests; IPHONEOS_DEPLOYMENT_TARGET = 17.0; SWIFT_VERSION = 5.0; }; name = Release; };
 		000000000000000000000911 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = com.mashhad.app.uitests; PRODUCT_NAME = MashhadUITests; TEST_TARGET_NAME = Mashhad; INFOPLIST_KEY_CFBundleDisplayName = MashhadUITests; IPHONEOS_DEPLOYMENT_TARGET = 17.0; SWIFT_VERSION = 5.0; }; name = Debug; };

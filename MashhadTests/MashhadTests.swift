@@ -20,4 +20,30 @@ final class MashhadTests: XCTestCase {
         let configuration = AppConfiguration(appName: "Mashhad", tmdbAPIKey: nil, supabaseURL: nil, supabaseAnonKey: nil)
         XCTAssertEqual(configuration.imageURL(path: "/poster.jpg")?.absoluteString, "https://image.tmdb.org/t/p/w500/poster.jpg")
     }
+
+    func testWatchProgressFiltersInvalidEpisodes() {
+        let progress = WatchProgressCalculator.progress(totalEpisodes: 4, watchedEpisodeNumbers: [1, 2, 0, 8])
+        XCTAssertEqual(progress.watchedEpisodes, 2)
+        XCTAssertEqual(progress.fraction, 0.5)
+        XCTAssertEqual(WatchProgressCalculator.nextUnwatchedEpisode(totalEpisodes: 4, watchedEpisodeNumbers: [1, 2]), 3)
+    }
+
+    func testSpoilerProtectionHidesUnwatchedLocations() {
+        let watched = EpisodeCoordinate(season: 1, episode: 2)
+        XCTAssertFalse(SpoilerProtection.shouldHide(
+            spoilerAt: EpisodeCoordinate(season: 1, episode: 2),
+            watchedThrough: watched,
+            explicitlyRevealed: false
+        ))
+        XCTAssertTrue(SpoilerProtection.shouldHide(
+            spoilerAt: EpisodeCoordinate(season: 1, episode: 3),
+            watchedThrough: watched,
+            explicitlyRevealed: false
+        ))
+        XCTAssertFalse(SpoilerProtection.shouldHide(
+            spoilerAt: EpisodeCoordinate(season: 2, episode: 1),
+            watchedThrough: watched,
+            explicitlyRevealed: true
+        ))
+    }
 }

@@ -144,8 +144,18 @@ struct MediaDetailsView: View {
     private func toggleWatchlist() {
         if let existing = watchlistEntry {
             modelContext.delete(existing)
+            environment.syncQueue.enqueue(
+                kind: .removeWatchlist,
+                payload: WatchlistSyncPayload(mediaID: media.id, mediaKind: media.kind, title: media.title),
+                in: modelContext
+            )
         } else {
             modelContext.insert(WatchlistEntry(media: media))
+            environment.syncQueue.enqueue(
+                kind: .addWatchlist,
+                payload: WatchlistSyncPayload(mediaID: media.id, mediaKind: media.kind, title: media.title),
+                in: modelContext
+            )
         }
     }
 

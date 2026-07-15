@@ -10,13 +10,13 @@
 | String Catalog عربي/إنجليزي | Completed | P0 | Xcode 15+ | `Localizable.xcstrings` صالح JSON ويحتوي المفاتيح الأساسية |
 | SwiftData لقائمة المشاهدة والتقدم | Completed | P0 | iOS 17 | نماذج الإضافة والحذف والتخزين المحلي موجودة |
 | TMDB service مع async/await وPagination أساس | In Progress | P0 | مفتاح TMDB خارجي | لا توجد مفاتيح داخل المستودع، وحالات خطأ/فراغ واضحة |
-| Onboarding محلي قابل للتوسع | In Progress | P0 | SessionStore | يمكن إكمال التدفق وتذكر الحالة |
+| Onboarding محلي قابل للتوسع | Completed | P0 | SessionStore | يمكن إكمال التدفق وتذكر الحالة |
 | Supabase schema وRLS | In Progress | P0 | مشروع Supabase | migration وسياسات RLS موجودة؛ التشغيل والاختبارات لاحقان |
-| Auth وSign in with Apple | Not Started | P0 | Supabase + Apple capability | تسجيل/خروج/حذف حساب فعلي |
+| Auth وSign in with Apple | In Progress | P0 | Supabase + Apple capability | كود البريد/Apple/Keychain/حذف الحساب موجود؛ التحقق عن بعد لاحق |
 | البحث والتفاصيل من TMDB | Completed | P0 | TMDB service | مسارا البحث والتفاصيل مربوطان بالخدمة |
-| التقويم والتنبيهات | Not Started | P1 | بيانات حلقات + APNs | إشعارات قابلة للتحكم وتوقيت محلي |
+| التقويم والتنبيهات | In Progress | P1 | بيانات حلقات + APNs | جدولة محلية وطلب إذن متأخر موجودان؛ APNs لاحق |
 | المجتمع والقوائم والإحصائيات | Not Started | P1 | Supabase schema | CRUD وRLS واختبارات أساسية |
-| Widgets وOffline Sync | Not Started | P1 | App Groups + BackgroundTasks | مزامنة Queue دون تكرار |
+| Widgets وOffline Sync | In Progress | P1 | App Groups + BackgroundTasks | Queue SwiftData ومحاولات إعادة الإرسال موجودة؛ sender/background لاحقان |
 | لوحة الإدارة وCI/CD | Not Started | P1 | GitHub/Supabase | build/lint/tests وفحص أسرار |
 
 ## قرارات أولية
@@ -42,3 +42,6 @@
 - فحص الأسرار عبر `rg`: لم يجد مفاتيح.
 - XcodeBuildMCP `discover_projs`: وجد `Mashhad.xcodeproj`.
 - XcodeBuildMCP `list_schemes`: محجوب بيئيًا برسالة `spawn xcodebuild ENOENT`؛ يلزم macOS/Xcode لإكمال Build والاختبارات.
+- XcodeBuildMCP `list_sims`: محجوب بيئيًا برسالة `spawn xcrun ENOENT`.
+- XcodeBuildMCP `build_sim`: رفض البدء لعدم وجود `simulatorId` أو `simulatorName` بعد فشل اكتشاف المحاكيات.
+- فحص مفاتيح String Catalog المستخدمة من Swift: نجح (`CATALOG_KEYS=102`).
