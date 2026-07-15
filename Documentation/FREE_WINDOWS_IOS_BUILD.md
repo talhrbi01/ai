@@ -2,7 +2,21 @@
 
 لا يمكن لـ Windows تشغيل `xcodebuild` محليًا. الحل المجاني العملي هو استخدام جهاز macOS مستضافًا في GitHub Actions، ثم توقيع الناتج على Windows.
 
-## الخطوات
+## المسار الأساسي: Codemagic
+
+هذا المستودع يحتوي على `codemagic.yaml` لبناء IPA غير موقّع على جهاز macOS مستضاف.
+
+1. أنشئ حسابًا شخصيًا مجانيًا في [Codemagic](https://codemagic.io/).
+2. اربط حساب GitHub واختر المستودع `talhrbi01/ai`.
+3. اختر Workflow باسم `mashhad-ios-free` ثم شغّل البناء.
+4. بعد نجاح البناء نزّل artifact باسم `Mashhad-unsigned.ipa`.
+5. على Windows استخدم Sideloadly أو AltStore لإعادة توقيع الملف بحساب Apple مجاني، ثم ثبّته على iPhone.
+
+الخطة الشخصية المجانية في Codemagic تمنح 500 دقيقة بناء macOS شهريًا، وهي كافية لهذا البناء التجريبي عادةً.
+
+## المسار البديل: GitHub Actions
+
+يمكن استخدام Workflow الموجود في `.github/workflows/free-ios-ipa.yml` بالطريقة التالية:
 
 1. أنشئ مستودعًا عامًا في GitHub وارفع المشروع إليه.
 2. تأكد أن الملف `.github/workflows/free-ios-ipa.yml` موجود في الفرع `main`.
@@ -20,4 +34,4 @@
 
 ## لماذا هذا المسار؟
 
-GitHub يوفر macOS runners للمستودعات العامة، وWorkflow هذا يستخدم `xcodebuild archive` لبناء تطبيق الجهاز ثم يضعه داخل `Payload` ويضغطه كـ IPA. بعد ذلك تتم عملية التوقيع على Windows، فلا توجد أسرار توقيع أو شهادات داخل المستودع.
+يوفر Codemagic خطة شخصية مجانية بوقت macOS محدود، بينما يوفر GitHub macOS runners للمستودعات العامة عند عدم وجود قفل فوترة على الحساب. كلا المسارين يستخدمان `xcodebuild archive` لبناء تطبيق الجهاز ثم يضعانه داخل `Payload` ويضغطانه كـ IPA. بعد ذلك تتم عملية التوقيع على Windows، فلا توجد أسرار توقيع أو شهادات داخل المستودع.
