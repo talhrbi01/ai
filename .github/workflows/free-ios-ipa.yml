@@ -2,6 +2,8 @@ name: Free iOS IPA Artifact
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
 
 permissions:
   contents: read
