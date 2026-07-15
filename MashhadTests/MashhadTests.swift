@@ -59,4 +59,13 @@ final class MashhadTests: XCTestCase {
         XCTAssertEqual(progress.id, "42-s2-e7")
         XCTAssertTrue(progress.isWatched)
     }
+
+    func testCustomListDeduplicatesMedia() {
+        let media = PreviewTMDBService.samples[0]
+        let list = CustomList(title: "المفضلة")
+        list.add(media: media)
+        list.add(media: media)
+        XCTAssertEqual(list.items.count, 1)
+        XCTAssertEqual(list.items.first?.id, "series-1")
+    }
 }
