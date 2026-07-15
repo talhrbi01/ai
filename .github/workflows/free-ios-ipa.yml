@@ -1,0 +1,49 @@
+name: Free iOS IPA Artifact
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unsigned-ipa:
+    name: Build unsigned iOS IPA
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Archive device build without signing
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf build
+          xcodebuild \
+            -project Mashhad.xcodeproj \
+            -scheme Mashhad \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath build/Mashhad.xcarchive \
+            archive \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO
+
+          app_path="$(find build/Mashhad.xcarchive/Products/Applications -maxdepth 1 -type d -name '*.app' -print -quit)"
+          test -n "$app_path"
+          mkdir -p build/Payload
+          cp -R "$app_path" build/Payload/Mashhad.app
+          (cd build && /usr/bin/zip -qry Mashhad-unsigned.ipa Payload)
+          /usr/bin/unzip -l build/Mashhad-unsigned.ipa | head -n 12
+
+      - name: Upload unsigned IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mashhad-unsigned-ipa
+          path: build/Mashhad-unsigned.ipa
+          if-no-files-found: error

@@ -9,6 +9,8 @@
 - مفتاح TMDB API للتغذية الحية.
 - Supabase عند تفعيل المصادقة والمزامنة والخدمات الاجتماعية.
 
+للبناء المجاني من Windows، راجع [FREE_WINDOWS_IOS_BUILD.md](Documentation/FREE_WINDOWS_IOS_BUILD.md).
+
 ## التشغيل
 
 1. افتح `Mashhad.xcodeproj` في Xcode.
