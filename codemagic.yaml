@@ -14,6 +14,7 @@ workflows:
             -project Mashhad.xcodeproj \
             -scheme Mashhad \
             -configuration Release \
+            -sdk iphoneos \
             -destination 'generic/platform=iOS' \
             -archivePath build/Mashhad.xcarchive \
             archive \
